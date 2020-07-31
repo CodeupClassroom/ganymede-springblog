@@ -26,10 +26,27 @@ public class MathController {
     }
 
 
+//    @GetMapping("/divide/{num1}/and/{num2}")
+//    @ResponseBody
+//    public String divide(@PathVariable int num1, @PathVariable int num2) {
+//        return String.valueOf(num1 / num2);
+//    }
+
+
+//    Rewrite
     @GetMapping("/divide/{num1}/and/{num2}")
     @ResponseBody
     public String divide(@PathVariable int num1, @PathVariable int num2) {
+        if (num2 == 0) {
+            return mathError();
+        }
         return String.valueOf(num1 / num2);
+    }
+
+    @GetMapping("/error")
+    @ResponseBody
+    public String mathError() {
+        return "Cannot divide by 0";
     }
 
 
