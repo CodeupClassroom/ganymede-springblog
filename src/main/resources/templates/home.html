@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>This is your home page!</h1>
+
+    <!--  This line is looking for an attribute named 'cohort'  -->
+    <!--  There is also placeholder text to be used for quick viewing  -->
+    <h3>Welcome <span th:text="${cohort}">Test</span></h3>
+
+    <h3>What cohort are you in?</h3>
+
+    <!--  This form is mapped to "/" and gets handled with a PostMapping  -->
+    <form action="/" method="post">
+        <!--   The form submits a cohort parameter that gets used in PostMapping   -->
+        <input type="text" name="cohort" id="cohort">
+        <button>Submit</button>
+    </form>
+
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+
+<!-- replace nav with navbar fragment from navbar.html in partials directory-->
+<nav th:replace= "partials/navbar :: navbar" />
+<body>
+    <h1>This is your profile</h1>
+    <p>Your username is: <span th:text="${username}"></span></p>
+    <p>Your password is: <span th:text="${password}"></span></p>
+
+    <!--  forEach ad inside of collection ${ads}  -->
+    <div th:if = "${isLoggedIn}">
+        <ul th:each="ad : ${ads}">
+            <li th:text="${ad}"></li>
+        </ul>
+    </div>
+</body>
+<footer th:replace= "partials/partials :: footer" />
+</html>
