@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:include="partials/head :: header-links">
+    <title>Roll Results</title>
+</head>
+<body>
+    <h1>You guessed: <span th:text="${n}"></span></h1>
+    <h1>The number was: <span th:text="${diceRoll}"></span></h1>
+
+    <h3 th:text="${message}"></h3>
+
+    <a href="/roll-dice">Play again!</a>
+</body>
+</html>
