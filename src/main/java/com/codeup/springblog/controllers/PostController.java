@@ -14,17 +14,20 @@ import java.util.ArrayList;
 public class PostController {
     @GetMapping("/posts")
     public String index(Model model){
+//        creating a list of posts, to be hardcoded in with post records
         ArrayList<Post> myPosts = new ArrayList<>();
         myPosts.add(new Post(2,"Title 2", "wqeoiruqowieuroiwueroiuqwer"));
         myPosts.add(new Post(3,"Title 3", "Ganymeeeeeeeeeeede"));
         myPosts.add(new Post(4,"Title 4", "wqeoiruqowieuroiwueroiuqwer"));
 
+//        sending over the arraylist to iterate through in html
         model.addAttribute("posts", myPosts);
         return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
     public String show(@PathVariable long id, Model model){
+//        the PathVariable id gets passed into the constructor
         Post myPost = new Post(id,"Test Title","Hello World!");
         model.addAttribute("title", myPost.getTitle());
         model.addAttribute("body", myPost.getBody());

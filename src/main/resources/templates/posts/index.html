@@ -5,6 +5,7 @@
     <title>Viewing All Posts</title>
 </head>
 <body>
+<!-- This is where we iterate through the Posts ArrayList -->
     <div th:each="post : ${posts}">
         <h1 th:text="${post.title}"></h1>
         <p th:text="${post.body}"></p>
