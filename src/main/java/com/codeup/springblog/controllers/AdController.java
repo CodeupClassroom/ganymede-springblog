@@ -50,4 +50,10 @@ public class AdController {
         return "redirect:/ads";
     }
 
+    @GetMapping("/ads/test")
+    @ResponseBody
+    public String getTestAd() {
+        return adsDao.findByTitle("Biodex").toString();
+    }
+
 }
