@@ -1,6 +1,9 @@
 package com.codeup.springblog.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "ads")
@@ -10,12 +13,16 @@ public class Ad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
     @Column(length = 50, nullable = false, unique = true)
     private String title;
 
     @Column(columnDefinition = "TEXT NOT NULL")
     private String description;
+
+    @OneToMany(mappedBy = "parentAd")
+    @JsonManagedReference
+    private List<Comment> comments;
+
 
     public Ad() {
     }
@@ -42,6 +49,14 @@ public class Ad {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
