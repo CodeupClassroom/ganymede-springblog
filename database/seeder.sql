@@ -1,5 +1,12 @@
 use ganymede_spring_db;
 
+# seed tags
+insert into tags (name) values ('Tag A');
+insert into tags (name) values ('Tag B');
+insert into tags (name) values ('Tag C');
+insert into tags (name) values ('Tag D');
+insert into tags (name) values ('Tag E');
+
 # seed ads
 insert into ads (title, description) values ('Solarbreeze', 'quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed vel enim sit amet nunc');
 insert into ads (title, description) values ('Biodex', 'nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non');
@@ -20,4 +27,11 @@ insert into comments (content, ad_id) values
     ('Comment 4', 2),
     ('Comment 5', 2),
     ('Comment 6', 3);
+
+# seed ad_tag
+insert into ad_tag (ad_id, tag_id) values
+(1, 1),
+(1, 2),
+(2, 1),
+(2, 2);
 
