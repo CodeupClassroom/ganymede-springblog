@@ -35,7 +35,7 @@ public class AdController {
     // return a view
     @GetMapping("/ads/view")
     public String getAdsIndex(Model model) {
-        model.addAttribute("ads", adsDao.findAll());
+        model.addAttribute("ads", adsDao.findAllByOrderByIdDesc());
         return "ads/index";
     }
 
@@ -55,38 +55,24 @@ public class AdController {
     }
 
 
-//    // ======================= version WITHOUT form model binding
-//    @GetMapping("/ads/create")
-//    public String showCreateForm() {
-//        return "ads/create_ad";
-//    }
-//
-//
-//    @PostMapping("/ads/create")
-//    @ResponseBody
-//    public String create(
-//            @RequestParam(name = "title") String title,
-//            @RequestParam(name = "description") String description
-//    ) {
-//        Ad ad = new Ad();
-//        ad.setTitle(title);
-//        ad.setDescription(description);
-//        // save the ad...
-//        return "Ad saved!";
-//    }
-
-
-    // ======================= version WITH form model binding
-
+    // ======================= version WITHOUT form model binding
     @GetMapping("/ads/create")
-    public String showCreateForm(Model model) {
-        model.addAttribute("ad", new Ad());
+    public String showCreateForm() {
         return "ads/create";
     }
 
     @PostMapping("/ads/create")
-    public String create(@ModelAttribute Ad ad) {
-        adsDao.save(ad);
-        return "redirect:/ads/view";
+    @ResponseBody
+    public String create(
+            @RequestParam(name = "title") String title,
+            @RequestParam(name = "description") String description
+    ) {
+        Ad ad = new Ad();
+        ad.setTitle(title);
+        ad.setDescription(description);
+        // save the ad...
+        return "Ad saved!";
     }
+
+
 }

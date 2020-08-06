@@ -1,18 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<head th:include="partials/head :: header-links">
+    <title>View Ads</title>
 </head>
 <body>
 
-    <h1>Showing All Ads...</h1>
-    <hr>
+    <div class="container mt-5">
+            <h1>Showing All Ads...</h1>
+            <a class="btn btn-primary" href="/ads/create" role="button">Create Ad</a>
 
-    <div th:each="ad : ${ads}">
-        <h1 th:text="${ad.title}"></h1>
-        <p th:text="${ad.description}"></p>
-    <hr>
+
+        <div class="row mt-5">
+            <div class="col">
+                <div class="card mb-2" th:each="ad : ${ads}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${ad.title}"></h5>
+                        <p class="card-text" th:text="${ad.description}"></p>
+<!--                        <a href="#" class="card-link">Card link</a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--        <div th:each="ad : ${ads}">-->
+<!--            <h1 th:text="${ad.title}"></h1>-->
+<!--            <p th:text="${ad.description}"></p>-->
+<!--        </div>-->
+
     </div>
 
 </body>
