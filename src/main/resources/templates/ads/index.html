@@ -7,10 +7,12 @@
 <body>
 
     <h1>Showing All Ads...</h1>
+    <hr>
 
     <div th:each="ad : ${ads}">
         <h1 th:text="${ad.title}"></h1>
         <p th:text="${ad.description}"></p>
+    <hr>
     </div>
 
 </body>
