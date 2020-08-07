@@ -4,9 +4,7 @@ import com.codeup.springblog.models.Ad;
 import com.codeup.springblog.repositories.AdRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,7 +35,7 @@ public class AdController {
     // return a view
     @GetMapping("/ads/view")
     public String getAdsIndex(Model model) {
-        model.addAttribute("ads", adsDao.findAll());
+        model.addAttribute("ads", adsDao.findAllByOrderByIdDesc());
         return "ads/index";
     }
 
@@ -55,5 +53,50 @@ public class AdController {
     public String getTestAd() {
         return adsDao.findByTitle("Biodex").toString();
     }
+
+
+    // ======================= version WITHOUT form model binding
+//    @GetMapping("/ads/create")
+//    public String showCreateForm() {
+//        return "ads/create";
+//    }
+//
+//    @PostMapping("/ads/create")
+//    @ResponseBody
+//    public String create(
+//            @RequestParam(name = "title") String title,
+//            @RequestParam(name = "description") String description
+//    ) {
+//        Ad ad = new Ad();
+//        ad.setTitle(title);
+//        ad.setDescription(description);
+//        // save the ad...
+//        return "Ad saved!";
+//    }
+
+
+
+
+    @GetMapping("/ads/create")
+    public String showCreateForm(Model model){
+        //Add an empty ad object to the model, so we can send it to the view
+        model.addAttribute("ad", new Ad());
+        return "ads/create";
+    }
+
+    @PostMapping("/ads/create")
+    public String createAd(@ModelAttribute Ad ad){
+        //Using the @ModelAttribute, reference the Ad object and save
+        adsDao.save(ad);
+
+        //redirect to /ads/view, because that endpoint returns all the ads
+        return "redirect:/ads/view";
+    }
+
+
+
+
+
+
 
 }
