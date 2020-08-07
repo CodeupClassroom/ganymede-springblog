@@ -107,8 +107,20 @@ public class PostController {
 
 //TODO CREATE /POSTS/EDIT WITH FORM MODEL BINDING
 
+@GetMapping("/posts/{id}/edit")
+public String showEditForm(@PathVariable long id, Model model){
+        model.addAttribute("post", postsDao.getOne(id));
+        return "posts/edit";
+}
 
-
+@PostMapping("/posts/{id}/edit")
+public String editPost(@PathVariable long id, @ModelAttribute Post post){
+        //TODO: Change user to logged in user dynamic
+        User user = usersDao.getOne(1L);
+        post.setAuthor(user);
+        postsDao.save(post);
+        return "redirect:/posts";
+}
 
 
 
