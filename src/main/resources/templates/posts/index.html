@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
+<head th:include="partials/head :: header-links">
     <title>Viewing All Posts</title>
 </head>
 <body>
-<!-- This is where we iterate through the Posts ArrayList -->
-    <div th:each="post : ${posts}">
-        <h1 th:text="${post.title}"></h1>
-        <p th:text="${post.body}"></p>
-        <p th:text="${post.author.email}"></p>
+
+<div class="container mt-5">
+    <h1>View All Posts</h1>
+    <a class="btn btn-primary" href="/posts/create" role="button">Create Post</a>
+
+    <div class="row mt-5">
+        <div class="col-12" th:each="post : ${posts}">
+            <h2 th:text="${post.title}"></h2>
+            <p th:text="${post.body}"></p>
+            <p>Posted By: <span th:text="${post.author.email}"></span></p>
+            <a class="btn btn-primary" th:href="@{/posts/{id}/edit(id=${post.id})}" role="button">Edit</a>
+            <hr>
+        </div>
     </div>
+</div>
+<!-- This is where we iterate through the Posts ArrayList -->
 </body>
 </html>

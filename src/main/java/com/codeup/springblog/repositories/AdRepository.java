@@ -26,5 +26,6 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
     @Query(nativeQuery = true, value = "SELECT title FROM ads WHERE LENGTH(title) < 10")
     List<String> getAdsOfCertainTitleLengthNative();
 
+//    This will return the ads in reversed order
     List<Ad> findAllByOrderByIdDesc();
 }
