@@ -44,6 +44,7 @@ public class PostController {
     public String insert(@RequestParam String title, @RequestParam String body){
         User user = usersDao.getOne(1L);
         Post post = new Post(title, body, user);
+        post.setAuthor(user);
         postsDao.save(post);
         return "redirect:/posts";
     }
