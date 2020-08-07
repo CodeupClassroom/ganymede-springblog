@@ -1,5 +1,7 @@
 package com.codeup.springblog.controllers;
 
+import com.codeup.springblog.repositories.PostRepository;
+import com.codeup.springblog.services.EmailService;
 import com.codeup.springblog.services.GreetingSvc;
 import com.codeup.springblog.services.SillySvc;
 import org.springframework.stereotype.Controller;
@@ -11,10 +13,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ServiceTestController {
     private GreetingSvc greetingSvc;
     private SillySvc sillySvc;
+    private EmailService emailService;
+    private PostRepository postDao;
 
-    public ServiceTestController(GreetingSvc greetingSvc, SillySvc sillySvc){
+    public ServiceTestController(GreetingSvc greetingSvc, SillySvc sillySvc, EmailService emailService, PostRepository postDao){
         this.greetingSvc = greetingSvc;
         this.sillySvc = sillySvc;
+        this.emailService = emailService;
+        this.postDao = postDao;
+    }
+
+    @GetMapping("/email")
+    @ResponseBody
+    public String sendEmail(){
+        emailService.prepareAndSend(postDao.getOne(1L), "First email!", "TESTING???????");
+        return "Check your mailtrap inbox!";
     }
 
     @GetMapping("/silly")
