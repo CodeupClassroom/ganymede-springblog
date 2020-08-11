@@ -1,7 +1,9 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Ad;
+import com.codeup.springblog.models.User;
 import com.codeup.springblog.repositories.AdRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,9 @@ public class AdController {
     // return a view
     @GetMapping("/ads/view")
     public String getAdsIndex(Model model) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(loggedInUser);
+        System.out.println(loggedInUser.getUsername());
         model.addAttribute("ads", adsDao.findAllByOrderByIdDesc());
         return "ads/index";
     }
