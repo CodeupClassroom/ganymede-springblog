@@ -10,98 +10,60 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @Controller
 public class AdController {
 
-    // dependency injection
-    private final AdRepository adsDao;
+    private AdRepository adsDao;
 
     public AdController(AdRepository adsDao) {
         this.adsDao = adsDao;
     }
 
-    @GetMapping("/ads/{id}")
-    @ResponseBody
-    public String getAd(@PathVariable long id) {
-        return adsDao.getOne(id).toString();
-    }
-
-
-    // return json
     @GetMapping("/ads")
-    @ResponseBody
-    public List<Ad> getAds() {
-        return adsDao.findAll();
-    }
-
-    // return a view
-    @GetMapping("/ads/view")
-    public String getAdsIndex(Model model) {
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(loggedInUser);
-        System.out.println(loggedInUser.getUsername());
-        model.addAttribute("ads", adsDao.findAllByOrderByIdDesc());
+    public String index(Model model) {
+        model.addAttribute("ads", adsDao.findAll());
         return "ads/index";
     }
 
-    @GetMapping("/ads/save")
-    public String save() {
-        Ad adToSave = new Ad();
-        adToSave.setTitle("New Ad 1!");
-        adToSave.setDescription("This is the new ad description!");
-        adsDao.save(adToSave);
-        return "redirect:/ads";
+    @GetMapping("/ads/{id}")
+    public String show(Model model, @PathVariable long id) {
+        model.addAttribute("ad", adsDao.getOne(id));
+        return "ads/show";
     }
-
-    @GetMapping("/ads/test")
-    @ResponseBody
-    public String getTestAd() {
-        return adsDao.findByTitle("Biodex").toString();
-    }
-
-
-    // ======================= version WITHOUT form model binding
-//    @GetMapping("/ads/create")
-//    public String showCreateForm() {
-//        return "ads/create";
-//    }
-//
-//    @PostMapping("/ads/create")
-//    @ResponseBody
-//    public String create(
-//            @RequestParam(name = "title") String title,
-//            @RequestParam(name = "description") String description
-//    ) {
-//        Ad ad = new Ad();
-//        ad.setTitle(title);
-//        ad.setDescription(description);
-//        // save the ad...
-//        return "Ad saved!";
-//    }
-
-
-
 
     @GetMapping("/ads/create")
-    public String showCreateForm(Model model){
-        //Add an empty ad object to the model, so we can send it to the view
+    public String create(Model model) {
         model.addAttribute("ad", new Ad());
         return "ads/create";
     }
 
     @PostMapping("/ads/create")
-    public String createAd(@ModelAttribute Ad ad){
-        //Using the @ModelAttribute, reference the Ad object and save
+    public String insert(@ModelAttribute Ad ad) {
+        ad.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         adsDao.save(ad);
-
-        //redirect to /ads/view, because that endpoint returns all the ads
-        return "redirect:/ads/view";
+        return "redirect:/ads";
     }
 
+    @GetMapping("/ads/{id}/edit")
+    public String edit(@PathVariable long id, Model model) {
+        model.addAttribute("ad", adsDao.getOne(id));
+        return "ads/edit";
+    }
 
+    @PostMapping("/ads/{id}/edit")
+    public String update(@PathVariable long id, @ModelAttribute Ad ad) {
+        Ad oldAd = adsDao.getOne(id);
+        oldAd.setTitle(ad.getTitle());
+        oldAd.setDescription(ad.getDescription());
+        adsDao.save(oldAd);
+        return "redirect:/ads/" + id;
+    }
 
-
-
-
+    @PostMapping("/ads/{id}/delete")
+    public String delete(@PathVariable long id) {
+        adsDao.deleteById(id);
+        return "redirect:/ads";
+    }
 
 }
